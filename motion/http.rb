@@ -173,6 +173,9 @@ Cache policy: #{@cache_policy}, response: #{@response.inspect} >"
         if upload_progress = options[:upload_progress]
           upload_progress.call(sending, written, expected)
         end
+        if on_data = options[:on_data]
+          on_data[:target].send(on_data[:action], received_data)
+        end
       end
 
       def connectionDidFinishLoading(connection)
