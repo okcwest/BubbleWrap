@@ -83,6 +83,10 @@ Cache policy: #{@cache_policy}, response: #{@response.inspect} >"
     if download_progress = options[:download_progress]
       download_progress.call(@received_data.length.to_f, response_size)
     end
+
+    if on_data = options[:on_data]
+      on_data[:target].send(on_data[:action], received_data)
+    end
   end
 
   def connection(connection, willSendRequest:request, redirectResponse:redirect_response)
